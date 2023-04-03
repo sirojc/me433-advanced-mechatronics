@@ -7,24 +7,24 @@ int main(void) {
   
   NU32DIP_Startup(); // cache on, interrupts on, LED/button init, UART init
   while (1) {
-    //NU32DIP_ReadUART1(message, 100); // wait here until get message from computer
-    //NU32DIP_WriteUART1(message); // send message back
-    //NU32DIP_WriteUART1("\r\n"); // carriage return and newline
+    sprintf(message, "Enter amount of blinks followed by duration:");
+    NU32DIP_WriteUART1(message);
+    NU32DIP_WriteUART1("\r\n");
     
-    int num_blinks, blink_duration;
+    int num_blinks, blink_dur;
     // Read number of blinks from user
     NU32DIP_ReadUART1(message, 100);
     sscanf(message, "%d", &num_blinks);
     // Read blink duration from user
     NU32DIP_ReadUART1(message, 100);
-    sscanf(message, "%d", &blink_duration);
+    sscanf(message, "%d", &blink_dur);
     
-    sprintf(message, "Blinking %d times for %d ms each", num_blinks, blink_duration);
+    sprintf(message, "Blinking %d times for %d ms each", num_blinks, blink_dur);
     NU32DIP_WriteUART1(message);
-    NU32DIP_WriteUART1("\r\n"); // carriage return and newline
+    NU32DIP_WriteUART1("\r\n");
     
 	if (NU32DIP_USER){
-		blink(num_blinks, blink_duration);
+		blink(num_blinks, blink_dur);
 	}
   }
 }
