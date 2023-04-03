@@ -10,8 +10,21 @@ int main(void) {
     //NU32DIP_ReadUART1(message, 100); // wait here until get message from computer
     //NU32DIP_WriteUART1(message); // send message back
     //NU32DIP_WriteUART1("\r\n"); // carriage return and newline
+    
+    int num_blinks, blink_duration;
+    // Read number of blinks from user
+    NU32DIP_ReadUART1(message, 100);
+    sscanf(message, "%d", &num_blinks);
+    // Read blink duration from user
+    NU32DIP_ReadUART1(message, 100);
+    sscanf(message, "%d", &blink_duration);
+    
+    sprintf(message, "Blinking %d times for %d ms each", num_blinks, blink_duration);
+    NU32DIP_WriteUART1(message);
+    NU32DIP_WriteUART1("\r\n"); // carriage return and newline
+    
 	if (NU32DIP_USER){
-		blink(5, 200); // 5 times, 500ms each time
+		blink(num_blinks, blink_duration);
 	}
   }
 }
