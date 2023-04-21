@@ -829,7 +829,7 @@
     (fp_line (start 1.27 6.35) (end -1.27 6.35)
       (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp 74666afe-2743-43a0-b4fe-1cdcfed11ce8))
     (pad "1" thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
-      (net 2 "GND") (pinfunction "A") (pintype "passive") (tstamp 043b6335-23c4-4aaa-a39a-fbf5579cc9a8))
+      (net 32 "/MCLR") (pinfunction "A") (pintype "passive") (tstamp 043b6335-23c4-4aaa-a39a-fbf5579cc9a8))
     (pad "2" thru_hole oval (at 0 5.08) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 2 "GND") (pinfunction "A") (pintype "passive") (tstamp 21e99425-1598-4b4c-b125-76bf7308635c))
     (model "${KICAD6_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.wrl"
@@ -1582,7 +1582,7 @@
     (fp_line (start 1.27 6.35) (end -1.27 6.35)
       (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp fd858fef-ea87-4885-8c7b-69735f9aca41))
     (pad "1" thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
-      (net 2 "GND") (pinfunction "A") (pintype "passive") (tstamp 3d2fdf51-76db-408a-aac1-381019360e11))
+      (net 33 "/A4") (pinfunction "A") (pintype "passive") (tstamp 3d2fdf51-76db-408a-aac1-381019360e11))
     (pad "2" thru_hole oval (at 0 5.08) (size 1.7 1.7) (drill 1) (layers "*.Cu" "*.Mask")
       (net 2 "GND") (pinfunction "A") (pintype "passive") (tstamp 08de5866-91db-44f5-9bd5-dd1c768d3162))
     (model "${KICAD6_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.wrl"

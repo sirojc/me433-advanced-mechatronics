@@ -4,7 +4,7 @@
 void initSPI() {
     // Pin B14 has to be SCK1
     // Turn of analog pins
-    ANSELA = 0;
+    ANSELB = 0; // ANSELA for A Pins, ANSELB for B Pins
     // Make an output pin for CS
     TRISBbits.TRISB7 = 0;
     RPB7Rbits.RPB7R = 0b0011;
