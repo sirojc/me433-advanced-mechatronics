@@ -2,8 +2,8 @@
 #define FONT_H__
 
 // make these functions:
-// void drawChar(...);
-// void drawString(...);
+//void drawChar(...);
+//void drawString(...);
 
 // lookup table for all of the ascii characters
 static const char ASCII[96][5] = {
