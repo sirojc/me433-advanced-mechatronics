@@ -1,7 +1,8 @@
 // WS2812B library
 
 #include "ws2812b.h"
-//#include "nu32dip.h"
+#include <stdio.h>
+#include "nu32dip.h"
 // other includes if necessary for debugging
 
 // Timer2 delay times, you can tune these if necessary
@@ -31,11 +32,14 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
     
     int nB = 1; // which high/low bit you are storing, 2 per color bit, 24 color bits per WS2812B
     // loop through each WS2812B
+    char m_in[100];
     for (i = 0; i < numLEDs; i++) {
         // loop through each color bit, MSB first
         for (j = 7; j >= 0; j--) {
             // if the bit is a 1
-            if (c[j].r) { /* identify the bit in c[].r, is it 1 */
+            //sprintf(m_in, "%c", c.r);
+            //NU32DIP_WriteUART1(m_in);
+            if (c[j].r & 1) { /* identify the bit in c[].r, is it 1 */
                 // the high is longer
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
@@ -51,9 +55,11 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
                 nB++;
             }
         }
+        //sprintf(m_in, "\r\n");
+        //NU32DIP_WriteUART1(m_in);
         // do it again for green
                 for (j = 7; j >= 0; j--) {
-            if (c[j].g) {
+            if (c[j].g & 1) {
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
                 delay_times[nB] = delay_times[nB - 1] + LOWTIME;
@@ -68,7 +74,7 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
         }
 		// do it again for blue
                 for (j = 7; j >= 0; j--) {
-            if (c[j].b) {
+            if (c[j].b & 1) {
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
                 delay_times[nB] = delay_times[nB - 1] + LOWTIME;
