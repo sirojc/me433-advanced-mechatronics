@@ -10,7 +10,7 @@ int main(void) {
     int numLEDs = 8;
     
     int hue = 0;
-    int step = 10;
+    int step = 1;
     
     wsColor c[numLEDs];
     
