@@ -9,14 +9,16 @@ int main(void) {
     
     int numLEDs = 8;
     int cycles = 0;
+    int amt = 6;
+    int angle = 360/amt;
     
     while(1){
         LEDY = !LEDY;
-        int hue = 360/numLEDs * cycles; // change to make each LED a different color
-        // wsColor c = HSBtoRGB(hue, 0, 1); // full color wheel, full brightness
-        wsColor c = {255, 255, 255};
+        int hue = angle * cycles;
+        wsColor c = HSBtoRGB(hue, 1, 1); // full color wheel, full brightness
+        //wsColor c = {255, 0, 0};
         ws2812b_setColor(&c, numLEDs);
-        if(cycles < 7){
+        if(cycles < amt){
             cycles++;
         }
         else{

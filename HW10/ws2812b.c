@@ -1,13 +1,11 @@
 // WS2812B library
 
 #include "ws2812b.h"
-#include <stdio.h>
-#include "nu32dip.h"
 // other includes if necessary for debugging
 
 // Timer2 delay times, you can tune these if necessary
-#define LOWTIME 15 // number of 48MHz cycles to be low for 0.35uS: 15 - 0.4us on array: 19.2
-#define HIGHTIME 65 // number of 48MHz cycles to be high for 1.65uS: 65 - 0.8us on array: 38.4
+#define LOWTIME 10 // number of 48MHz cycles to be low for 0.35uS: 15 - 0.4us on array: 19.2
+#define HIGHTIME 30 // number of 48MHz cycles to be high for 1.65uS: 65 - 0.8us on array: 38.4
 
 // setup Timer2 for 48MHz, and setup the output pin
 void ws2812b_setup() {
@@ -17,7 +15,7 @@ void ws2812b_setup() {
     T2CONbits.ON = 1; // turn on Timer2
 
     // initialize output pin as off
-    // TRIS...
+    TRISBbits.TRISB6 = 0;
     LATBbits.LATB6 = 0;
 }
 
@@ -32,14 +30,11 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
     
     int nB = 1; // which high/low bit you are storing, 2 per color bit, 24 color bits per WS2812B
     // loop through each WS2812B
-    char m_in[100];
     for (i = 0; i < numLEDs; i++) {
         // loop through each color bit, MSB first
         for (j = 7; j >= 0; j--) {
             // if the bit is a 1
-            //sprintf(m_in, "%c", c.r);
-            //NU32DIP_WriteUART1(m_in);
-            if (c[j].r & 1) { /* identify the bit in c[].r, is it 1 */
+            if (c->r & (1 << j)) { /* identify the bit in c[].r, is it 1 */
                 // the high is longer
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
@@ -58,8 +53,8 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
         //sprintf(m_in, "\r\n");
         //NU32DIP_WriteUART1(m_in);
         // do it again for green
-                for (j = 7; j >= 0; j--) {
-            if (c[j].g & 1) {
+        for (j = 7; j >= 0; j--) {
+            if (c->g & (1 << j)) {
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
                 delay_times[nB] = delay_times[nB - 1] + LOWTIME;
@@ -74,7 +69,7 @@ void ws2812b_setColor(wsColor * c, int numLEDs) {
         }
 		// do it again for blue
                 for (j = 7; j >= 0; j--) {
-            if (c[j].b & 1) {
+            if (c->b & (1 << j)) {
                 delay_times[nB] = delay_times[nB - 1] + HIGHTIME;
                 nB++;
                 delay_times[nB] = delay_times[nB - 1] + LOWTIME;
