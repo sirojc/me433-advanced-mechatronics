@@ -8,27 +8,48 @@ int main(void) {
     ws2812b_setup();
     
     int numLEDs = 8;
-    int cycles = 0;
-    int amt = 6;
-    int angle = 360/amt;
+    
+    int hue = 0;
+    int step = 10;
+    
+    wsColor c[numLEDs];
     
     while(1){
         LEDY = !LEDY;
-        int hue = angle * cycles;
-        wsColor c = HSBtoRGB(hue, 1, 1); // full color wheel, full brightness
-        //wsColor c = {255, 0, 0};
+        
+        /*for(int i = 0; i < numLEDs; i++){
+            int hue = (hue0 + step*i)%360;
+            wsColor s = HSBtoRGB(hue, 1, 1);
+            c[i] = s;
+        }*/
+        for(int i = 0; i< numLEDs; i++){
+            c[i] = HSBtoRGB(hue + 20*i, 1, 1);
+        }
         ws2812b_setColor(&c, numLEDs);
-        if(cycles < amt){
-            cycles++;
+
+        if(hue >= 360){
+            hue = 0;
         }
         else{
-            cycles = 0;
+            hue += step;
         }
+        
         _CP0_SET_COUNT(0);
-        while(_CP0_GET_COUNT() < 24000 * 500){};
+        while(_CP0_GET_COUNT() < 24000 * 50){};
     }
-    
-    
-
 }
 
+
+
+
+        /*for(int n = 0; n < amt; n++){
+            for(int i = 0; i < numLEDs; i++){
+                int inc = (i+n) % (numLEDs-1);
+                int hue = angle * inc;
+                wsColor s = HSBtoRGB(hue, 1, 0.4); // full color wheel, full brightness
+                c[i] = s;
+            } 
+            ws2812b_setColor(&c, numLEDs);
+            _CP0_SET_COUNT(0);
+            while(_CP0_GET_COUNT() < 24000 * 100){};
+        }*/
