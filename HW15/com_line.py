@@ -115,36 +115,16 @@ while True:
         reds[i] = ((bitmap[row,i]>>5)&0x3F)/0x3F*100
         greens[i] = ((bitmap[row,i])&0x1F)/0x1F*100
         blues[i] = (bitmap[row,i]>>11)/0x1F*100
-        bright[i] = reds[i]+greens[i]+blues[i]
+        bright[i] = (reds[i]+greens[i]+blues[i])/3.0
 
-    avg_r = 0
+    avg_b = 0
     for i in range(0,60):
-        avg_r += greens[i]/60
-
-    high_g = 0
-    low_g = 0
-    for  i in range(0,60):
-        if(greens[i] < avg_r):
-            low_g += 1
-        else:
-            high_g += 1
-
-    contrast = 1 # defines whether line is higher or lower contrast than background - standard: higher
-    if low_g < high_g:
-        contrast = 0
+        avg_b += bright[i]/60.0
 
     sum_color = 0
     sum_idx = 0
     for i in range(0,60):
-        if contrast == 0:
-            if(greens[i] < avg_r):
-                bitmap[row,i] = 0xFFFF
-                sum_idx += i
-                sum_color += 1
-            else:
-                bitmap[row,i] = 0x0000
-        else:
-            if(greens[i] > avg_r):
+            if(bright[i] > avg_b):
                 bitmap[row,i] = 0xFFFF
                 sum_idx += i
                 sum_color += 1

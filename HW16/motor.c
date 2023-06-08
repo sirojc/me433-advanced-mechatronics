@@ -6,7 +6,7 @@ void init_motor(){
     TRISBbits.TRISB8 = 0;  //set B8 to output
     TRISBbits.TRISB9 = 0;  //set B9 to output
     MOTOR_RIGHT_DIRECTION = 0; // Forward 0; Backward 1
-    MOTOR_LEFT_DIRECTION = 0; // Forward; Backward 1
+    MOTOR_LEFT_DIRECTION = 0; // Forward 0; Backward 1
 
     // 20kHz Timer for PWM
     T3CONbits.TCKPS = 0b001;      // Timer3 prescaler 0b001
@@ -16,13 +16,13 @@ void init_motor(){
     // Assign OC1 to B7 -> Motor Left PWM
     RPB7Rbits.RPB7R = 0b0101;
     OC1CONbits.OCM = 0b110;       // PWM mode without fault pin; other OC1CON bits are defaults
-    MOTOR_RIGHT_SPEED = 1200;     // duty cycle = MOTOR_RIGHT_SPEED/(PR3+1) = 50%
+    MOTOR_LEFT_SPEED = 800;     // duty cycle = MOTOR_RIGHT_SPEED/(PR3+1) = 50%
     OC1R = 1000;                  // initialize before turning OC1 on; afterward it is read-only
     OC1CONbits.OCTSEL = 1;        // Use Timer 3
     // Assign OC2 to B11 -> Motor Right PWM
     RPB11Rbits.RPB11R = 0b0101;
     OC2CONbits.OCM = 0b110;       // PWM mode without fault pin; other OC2CON bits are defaults
-    MOTOR_LEFT_SPEED = 1200;      // duty cycle = MOTOR_LEFT_SPEED/(PR3+1) = 50%
+    MOTOR_RIGHT_SPEED = 800;      // duty cycle = MOTOR_LEFT_SPEED/(PR3+1) = 50%
     OC2R = 1000;                  // initialize before turning OC2 on; afterward it is read-only
     OC2CONbits.OCTSEL = 1;        // Use Timer 3
     
@@ -31,12 +31,12 @@ void init_motor(){
     OC2CONbits.ON = 1;            // turn on OC2
 }
 
-void set_pwm_dir(int e){
+void set_pwm_dir(float e, float e_intg){
     MOTOR_LEFT_DIRECTION = 0;
     MOTOR_RIGHT_DIRECTION = 0;
     
-    int pwm_L = e * Kp + PWM_MAX;
-    int pwm_R = -e * Kp + PWM_MAX;
+    int pwm_L = e * Kp + Ki * e_intg + PWM_0;
+    int pwm_R = -e * Kp - Ki * e_intg + PWM_0;
     
     if (pwm_L >= PWM_MAX){
         MOTOR_RIGHT_SPEED = (int)(PR3_PERIOD*(float)PWM_MAX/100);
