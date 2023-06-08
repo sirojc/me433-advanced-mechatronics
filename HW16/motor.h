@@ -14,7 +14,7 @@
 // P Controller parameters
 #define SETPOINT 30 // setpoint COM in middle of image
 #define Kp 0.03
-#define Ki 0.05
+#define Ki 0.03
 #define PWM_MAX 33 // max speed of wheel
 #define PWM_MIN 27 // min speed of wheel
 #define PWM_0 30 // base speed of wheel
