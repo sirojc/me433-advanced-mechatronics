@@ -82,6 +82,8 @@ This repository contains the code deliverables for all assignments, to be found 
 - Tuned a PI controller to improve line following capabilities.
 - Robot was able to follow a straight line, even of changing color, fairly well. Turns, however, did not work well.
 
+<img src="https://github.com/sirojc/me433-advanced-mechatronics/blob/main/robot_final.png" height="450">
+
 
 
 ### Tips
